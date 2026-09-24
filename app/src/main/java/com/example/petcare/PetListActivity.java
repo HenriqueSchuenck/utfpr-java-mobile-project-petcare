@@ -1,50 +1,73 @@
 package com.example.petcare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import java.util.ArrayList;
+
 import java.util.ArrayList;
 
 public class PetListActivity extends AppCompatActivity {
 
     private ListView lvPets;
     private ArrayList<Pet> listaPets;
+    private PetAdapter adapter;
+    private Button btnAdicionar, btnSobre;
+
+    private static final int REQUEST_CODE_CADASTRO = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_list);
+        setTitle("Meus Pets");
 
         lvPets = findViewById(R.id.lvPets);
+        btnAdicionar = findViewById(R.id.btnAdicionar);
+        btnSobre = findViewById(R.id.btnSobre);
+
         listaPets = new ArrayList<>();
-
-        carregarDadosDoResource();
-
-        PetAdapter adapter = new PetAdapter(this, R.layout.item_pet, listaPets);
+        adapter = new PetAdapter(this, R.layout.item_pet, listaPets);
         lvPets.setAdapter(adapter);
 
-        lvPets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        btnAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Pet petClicado = listaPets.get(position);
-                String mensagem = "Pet selecionado: " + petClicado.getNome() +
-                        " (" + petClicado.getEspecie() + ")";
-                Toast.makeText(PetListActivity.this, mensagem, Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                Intent intent = new Intent(PetListActivity.this, MainActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_CADASTRO);
+            }
+        });
+
+        btnSobre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PetListActivity.this, SobreActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    private void carregarDadosDoResource() {
-        String[] nomes = getResources().getStringArray(R.array.pet_nomes);
-        String[] especies = getResources().getStringArray(R.array.pet_especies);
-        String[] racas = getResources().getStringArray(R.array.pet_racas);
-        String[] datas = getResources().getStringArray(R.array.pet_datas_nascimento);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        for (int i = 0; i < nomes.length; i++) {
-            listaPets.add(new Pet(nomes[i], especies[i], racas[i], datas[i]));
+        if (requestCode == REQUEST_CODE_CADASTRO && resultCode == RESULT_OK && data != null) {
+            String nome = data.getStringExtra("nome");
+            String raca = data.getStringExtra("raca");
+            String dataNascimento = data.getStringExtra("dataNascimento");
+            String especie = data.getStringExtra("especie");
+
+            Pet novoPet = new Pet(nome, especie, raca, dataNascimento);
+            listaPets.add(novoPet);
+            adapter.notifyDataSetChanged();
         }
     }
 }

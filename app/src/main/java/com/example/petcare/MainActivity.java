@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (dataNascimento.isEmpty()) {
-            Toast.makeText(this, "Erro: A data de nascimento não pode estar vazia!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erro: A data não pode estar vazia!", Toast.LENGTH_SHORT).show();
             etDataNascimento.requestFocus();
             return;
         }
@@ -96,16 +97,14 @@ public class MainActivity extends AppCompatActivity {
 
         RadioButton selectedRadioButton = findViewById(selectedId);
         String especie = selectedRadioButton.getText().toString();
-        String porte = spPorte.getSelectedItem().toString();
-        boolean castrado = cbCastrado.isChecked();
 
-        String dadosCadastrados = "Pet: " + nome +
-                " | Raça: " + raca +
-                " | Nasc: " + dataNascimento +
-                " | Espécie: " + especie +
-                " | Porte: " + porte +
-                " | Castrado: " + (castrado ? "Sim" : "Não");
+        Intent intentRetorno = new Intent();
+        intentRetorno.putExtra("nome", nome);
+        intentRetorno.putExtra("raca", raca);
+        intentRetorno.putExtra("dataNascimento", dataNascimento);
+        intentRetorno.putExtra("especie", especie);
 
-        Toast.makeText(this, dadosCadastrados, Toast.LENGTH_LONG).show();
+        setResult(RESULT_OK, intentRetorno);
+        finish();
     }
 }
