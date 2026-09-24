@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:padding="16dp">
+    android:paddingTop="40dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="DD/MM/AAAA"
-            android:inputType="date"
+            android:focusable="false"
+            android:clickable="true"
             android:layout_marginBottom="16dp"/>
 
         <TextView
@@ -112,28 +116,6 @@
             android:text="Pet Castrado"
             android:layout_marginBottom="24dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/btnLimpar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Limpar"
-                android:layout_marginEnd="8dp"/>
-
-            <Button
-                android:id="@+id/btnSalvar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Salvar"
-                android:layout_marginStart="8dp"/>
-        </LinearLayout>
-
     </LinearLayout>
+
 </ScrollView>

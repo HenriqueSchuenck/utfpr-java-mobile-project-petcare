@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import java.util.List;
 
 public class PetAdapter extends ArrayAdapter<Pet> {
@@ -32,8 +35,12 @@ public class PetAdapter extends ArrayAdapter<Pet> {
 
             tvNome.setText(petAtual.getNome());
             tvDetalhes.setText(petAtual.getEspecie() + " - " + petAtual.getRaca());
-            tvDataNascimento.setText("Nascimento: " + petAtual.getDataNascimento());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String dataFormatada = sdf.format(petAtual.getDataNascimento());
+            tvDataNascimento.setText("Nascimento: " + dataFormatada);
         }
+
+
 
         return convertView;
     }
