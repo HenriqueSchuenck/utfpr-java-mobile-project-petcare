@@ -37,7 +37,7 @@ public class PetAdapter extends ArrayAdapter<Pet> {
             tvDetalhes.setText(petAtual.getEspecie() + " - " + petAtual.getRaca());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String dataFormatada = sdf.format(petAtual.getDataNascimento());
-            tvDataNascimento.setText("Nascimento: " + dataFormatada);
+            tvDataNascimento.setText(getContext().getString(R.string.label_birth, dataFormatada));
         }
 
 

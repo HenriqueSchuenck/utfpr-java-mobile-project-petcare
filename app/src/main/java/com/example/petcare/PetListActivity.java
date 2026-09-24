@@ -1,6 +1,7 @@
 package com.example.petcare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -33,7 +35,15 @@ public class PetListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_list);
-        setTitle("Meus Pets");
+        setTitle(getString(R.string.title_list));
+
+        SharedPreferences prefs = getSharedPreferences("PetCarePrefs", MODE_PRIVATE);
+        boolean isDarkMode = prefs.getBoolean("dark_mode", false);
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.lvPets), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -72,6 +82,9 @@ public class PetListActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivityForResult(intent, REQUEST_CODE_CADASTRO);
             return true;
+        } else if (item.getItemId() == R.id.item_config) {
+            startActivity(new Intent(this, ConfigActivity.class));
+            return true;
         } else if (item.getItemId() == R.id.item_sobre) {
             startActivity(new Intent(this, SobreActivity.class));
             return true;
@@ -83,7 +96,8 @@ public class PetListActivity extends AppCompatActivity {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.menu_context_lista, menu);
-            mode.setTitle("Opções");
+            // Internacionalização do título do menu contextual
+            mode.setTitle(getString(R.string.menu_options_title));
             return true;
         }
 
@@ -135,9 +149,9 @@ public class PetListActivity extends AppCompatActivity {
             String especie = data.getStringExtra("especie");
             String porte = data.getStringExtra("porte");
             boolean castrado = data.getBooleanExtra("castrado", false);
+
             long dataMillis = data.getLongExtra("dataNascimento", -1);
             Date dataNascimentoObj = (dataMillis != -1) ? new Date(dataMillis) : new Date();
-
 
             if (requestCode == REQUEST_CODE_CADASTRO) {
                 listaPets.add(new Pet(nome, especie, raca, dataNascimentoObj, porte, castrado));

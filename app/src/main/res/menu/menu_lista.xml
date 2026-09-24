@@ -10,4 +10,9 @@
         android:id="@+id/item_sobre"
         android:title="Sobre"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/item_config"
+        android:title="@string/menu_config"
+        app:showAsAction="never" />
 </menu>

@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:paddingTop="40dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    android:paddingTop="70dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cadastro de Pet - PetCare"
+            android:text="@string/title_menu"
             android:textSize="22sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome do Pet:"
+            android:text="@string/label_name"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
@@ -33,14 +33,14 @@
             android:id="@+id/etNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite o nome do pet"
+            android:hint="@string/hint_name"
             android:inputType="textPersonName"
             android:layout_marginBottom="16dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Raça:"
+            android:text="@string/label_breed"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
@@ -48,14 +48,14 @@
             android:id="@+id/etRaca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite a raça do pet"
+            android:hint="@string/hint_breed"
             android:inputType="text"
             android:layout_marginBottom="16dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Data de Nascimento:"
+            android:text="@string/label_birth"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
@@ -63,7 +63,7 @@
             android:id="@+id/etDataNascimento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="DD/MM/AAAA"
+            android:hint="@string/hint_birth"
             android:focusable="false"
             android:clickable="true"
             android:layout_marginBottom="16dp"/>
@@ -71,7 +71,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Espécie:"
+            android:text="@string/label_species"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
@@ -86,20 +86,20 @@
                 android:id="@+id/rbCao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cão"
+                android:text="@string/species_dog"
                 android:layout_marginEnd="24dp"/>
 
             <RadioButton
                 android:id="@+id/rbGato"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gato"/>
+                android:text="@string/species_cat"/>
         </RadioGroup>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Porte:"
+            android:text="@string/label_size"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
@@ -113,7 +113,7 @@
             android:id="@+id/cbCastrado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pet Castrado"
+            android:text="@string/label_castrated"
             android:layout_marginBottom="24dp"/>
 
     </LinearLayout>

@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">PetCare</string>
+
+    <string name="title_list">Meus Pets</string>
+    <string name="title_add">Novo Pet</string>
+    <string name="title_edit">Editar Pet</string>
+    <string name="title_about">Sobre o App</string>
+    <string name="title_config">Configurações</string>
+    <string name="title_menu">Cadastro de Pet - PetCare</string>
+
+    <string name="menu_add">Adicionar</string>
+    <string name="menu_about">Sobre</string>
+    <string name="menu_edit">Editar</string>
+    <string name="menu_delete">Excluir</string>
+    <string name="menu_save">Salvar</string>
+    <string name="menu_clear">Limpar</string>
+    <string name="menu_config">Configurações</string>
+    <string name="menu_options_title">Opções</string>
+
+    <string name="label_name">Nome do Pet:</string>
+    <string name="hint_name">Digite o nome do pet</string>
+    <string name="label_breed">Raça:</string>
+    <string name="hint_breed">Digite a raça do pet</string>
+    <string name="label_birth">Nascimento:</string>
+    <string name="hint_birth">DD/MM/AAAA</string>
+    <string name="label_species">Espécie:</string>
+    <string name="species_dog">Cão</string>
+    <string name="species_cat">Gato</string>
+    <string name="label_size">Porte:</string>
+    <string name="label_castrated">Castrado?</string>
+    <string name="size_small">Pequeno</string>
+    <string name="size_medium">Médio</string>
+    <string name="size_large">Grande</string>
+
+    <string name="msg_cleared">Campos limpos com sucesso!</string>
+    <string name="err_name_empty">Erro: O nome do pet não pode estar vazio!</string>
+    <string name="err_breed_empty">Erro: A raça do pet não pode estar vazia!</string>
+    <string name="err_birth_empty">Erro: A data de nascimento não pode estar vazia!</string>
+    <string name="err_date_format">Erro: Formato de data inválido!</string>
+    <string name="err_species_empty">Erro: Selecione a espécie do pet!</string>
+
+    <string name="label_dark_mode">Habilitar Modo Noturno</string>
+</resources>
