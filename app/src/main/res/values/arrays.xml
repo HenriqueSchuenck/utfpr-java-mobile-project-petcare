@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pet_nomes">
+        <item>Rex</item>
+        <item>Miau</item>
+        <item>Bidu</item>
+        <item>Thor</item>
+        <item>Luna</item>
+        <item>Nina</item>
+        <item>Bob</item>
+        <item>Mel</item>
+        <item>Fred</item>
+        <item>Amora</item>
+    </string-array>
+
+    <string-array name="pet_especies">
+        <item>Cão</item>
+        <item>Gato</item>
+        <item>Cão</item>
+        <item>Cão</item>
+        <item>Gato</item>
+        <item>Gato</item>
+        <item>Cão</item>
+        <item>Cão</item>
+        <item>Ave</item>
+        <item>Coelho</item>
+    </string-array>
+
+    <string-array name="pet_racas">
+        <item>Labrador</item>
+        <item>Siamês</item>
+        <item>Poodle</item>
+        <item>Bulldog</item>
+        <item>Persa</item>
+        <item>SRD</item>
+        <item>Golden Retriever</item>
+        <item>Pug</item>
+        <item>Calopsita</item>
+        <item>Mini Lion</item>
+    </string-array>
+
+    <string-array name="pet_datas_nascimento">
+        <item>10/01/2020</item>
+        <item>15/05/2019</item>
+        <item>20/08/2021</item>
+        <item>05/10/2018</item>
+        <item>12/03/2022</item>
+        <item>18/12/2020</item>
+        <item>25/07/2017</item>
+        <item>30/01/2023</item>
+        <item>14/04/2021</item>
+        <item>08/09/2022</item>
+    </string-array>
+</resources>
