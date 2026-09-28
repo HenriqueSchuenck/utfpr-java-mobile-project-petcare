@@ -1,8 +1,15 @@
 package com.example.petcare;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity(tableName = "pets")
 public class Pet {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String nome;
     private String especie;
     private String raca;
@@ -20,6 +27,10 @@ public class Pet {
     }
 
     // Getters
+    public int getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -45,6 +56,10 @@ public class Pet {
     }
 
     // Setters
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }

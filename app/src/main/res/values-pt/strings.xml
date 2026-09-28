@@ -22,8 +22,10 @@
     <string name="label_breed">Raça:</string>
     <string name="hint_breed">Digite a raça do pet</string>
     <string name="label_birth">Nascimento:</string>
+    <string name="label_born_format">Nascimento: %1$s</string>
     <string name="hint_birth">DD/MM/AAAA</string>
     <string name="label_species">Espécie:</string>
+    <string name="format_species_breed">%1$s - %2$s</string>
     <string name="species_dog">Cão</string>
     <string name="species_cat">Gato</string>
     <string name="label_size">Porte:</string>
@@ -38,6 +40,11 @@
     <string name="err_birth_empty">Erro: A data de nascimento não pode estar vazia!</string>
     <string name="err_date_format">Erro: Formato de data inválido!</string>
     <string name="err_species_empty">Erro: Selecione a espécie do pet!</string>
+
+    <string name="dialog_delete_title">Excluir Pet</string>
+    <string name="dialog_delete_message">Tem certeza que deseja excluir este pet?</string>
+    <string name="dialog_yes">Sim</string>
+    <string name="dialog_no">Não</string>
 
     <string name="label_dark_mode">Habilitar Modo Noturno</string>
 </resources>

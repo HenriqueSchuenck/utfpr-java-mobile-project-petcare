@@ -22,6 +22,7 @@ import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         spPorte.setAdapter(adapter);
 
         Intent intent = getIntent();
-        posicaoEdicao = intent.getIntExtra("posicao", -1);
+        posicaoEdicao = intent.getIntExtra("id_pet", -1);
 
         if (posicaoEdicao != -1) {
             setTitle(getString(R.string.title_edit));
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        java.util.Date dataNascimentoObj = null;
+        java.util.Date dataNascimentoObj;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             dataNascimentoObj = sdf.parse(dataNascimentoStr);
@@ -211,9 +212,10 @@ public class MainActivity extends AppCompatActivity {
         boolean castrado = cbCastrado.isChecked();
 
         Intent intentRetorno = new Intent();
+        intentRetorno.putExtra("id_pet", posicaoEdicao);
         intentRetorno.putExtra("nome", nome);
         intentRetorno.putExtra("raca", raca);
-        intentRetorno.putExtra("dataNascimento", dataNascimentoObj.getTime());
+        intentRetorno.putExtra("dataNascimento", Objects.requireNonNull(dataNascimentoObj).getTime());
         intentRetorno.putExtra("especie", especie);
         intentRetorno.putExtra("porte", porte);
         intentRetorno.putExtra("castrado", castrado);

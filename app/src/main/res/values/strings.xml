@@ -22,8 +22,10 @@
     <string name="label_breed">Breed:</string>
     <string name="hint_breed">Enter breed</string>
     <string name="label_birth">Birth Date:</string>
+    <string name="label_born_format">Birth Date: %1$s</string>
     <string name="hint_birth">DD/MM/YYYY</string>
     <string name="label_species">Species:</string>
+    <string name="format_species_breed">%1$s - %2$s</string>
     <string name="species_dog">Dog</string>
     <string name="species_cat">Cat</string>
     <string name="label_size">Size:</string>
@@ -38,6 +40,11 @@
     <string name="err_birth_empty">Error: Birth date cannot be empty!</string>
     <string name="err_date_format">Error: Invalid date format!</string>
     <string name="err_species_empty">Error: Select the pet species!</string>
+
+    <string name="dialog_delete_title">Delete Pet</string>
+    <string name="dialog_delete_message">Are you sure you want to delete this pet?</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
 
     <string name="label_dark_mode">Enable Dark Mode</string>
 </resources>

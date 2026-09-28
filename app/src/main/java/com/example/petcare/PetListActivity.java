@@ -11,31 +11,27 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PetListActivity extends AppCompatActivity {
 
     private ListView lvPets;
-    private ArrayList<Pet> listaPets;
-    private PetAdapter adapter;
+    private List<Pet> listaPets;
+    private PetDao petDao;
+
     private static final int REQUEST_CODE_CADASTRO = 1;
     private static final int REQUEST_CODE_EDICAO = 2;
-
     private int posicaoSelecionada = -1;
     private ActionMode actionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_list);
-        setTitle(getString(R.string.title_list));
 
         SharedPreferences prefs = getSharedPreferences("PetCarePrefs", MODE_PRIVATE);
         boolean isDarkMode = prefs.getBoolean("dark_mode", false);
@@ -45,16 +41,13 @@ public class PetListActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.lvPets), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setContentView(R.layout.activity_pet_list);
+        setTitle(getString(R.string.title_list));
 
+        petDao = AppDatabase.getInstance(this).petDao();
         lvPets = findViewById(R.id.lvPets);
-        listaPets = new ArrayList<>();
-        adapter = new PetAdapter(this, R.layout.item_pet, listaPets);
-        lvPets.setAdapter(adapter);
+
+        atualizarLista();
 
         lvPets.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -68,6 +61,12 @@ public class PetListActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void atualizarLista() {
+        listaPets = petDao.getAllPets();
+        PetAdapter adapter = new PetAdapter(this, R.layout.item_pet, listaPets);
+        lvPets.setAdapter(adapter);
     }
 
     @Override
@@ -92,11 +91,10 @@ public class PetListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+    private final ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.menu_context_lista, menu);
-            // Internacionalização do título do menu contextual
             mode.setTitle(getString(R.string.menu_options_title));
             return true;
         }
@@ -108,25 +106,35 @@ public class PetListActivity extends AppCompatActivity {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            if (item.getItemId() == R.id.item_editar) {
-                Pet pet = listaPets.get(posicaoSelecionada);
-                Intent intent = new Intent(PetListActivity.this, MainActivity.class);
+            final Pet pet = listaPets.get(posicaoSelecionada);
 
-                intent.putExtra("posicao", posicaoSelecionada);
+            if (item.getItemId() == R.id.item_editar) {
+                Intent intent = new Intent(PetListActivity.this, MainActivity.class);
+                intent.putExtra("id_pet", pet.getId()); // Enviar o ID da Base de Dados
                 intent.putExtra("nome", pet.getNome());
                 intent.putExtra("raca", pet.getRaca());
                 intent.putExtra("dataNascimento", pet.getDataNascimento().getTime());
                 intent.putExtra("especie", pet.getEspecie());
-                intent.putExtra("porte", pet.getPorte());         // Envia o Porte
-                intent.putExtra("castrado", pet.isCastrado());    // Envia o Castrado
+                intent.putExtra("porte", pet.getPorte());
+                intent.putExtra("castrado", pet.isCastrado());
 
                 startActivityForResult(intent, REQUEST_CODE_EDICAO);
                 mode.finish();
                 return true;
+
             } else if (item.getItemId() == R.id.item_excluir) {
-                listaPets.remove(posicaoSelecionada);
-                adapter.notifyDataSetChanged();
-                mode.finish();
+                new AlertDialog.Builder(PetListActivity.this)
+                        .setTitle(getString(R.string.dialog_delete_title))
+                        .setMessage(getString(R.string.dialog_delete_message))
+                        .setPositiveButton(getString(R.string.dialog_yes), (dialog, which) -> {
+                            petDao.delete(pet);
+                            atualizarLista();
+                            mode.finish();
+                        })
+                        .setNegativeButton(getString(R.string.dialog_no), (dialog, which) -> {
+                            mode.finish();
+                        })
+                        .show();
                 return true;
             }
             return false;
@@ -153,22 +161,18 @@ public class PetListActivity extends AppCompatActivity {
             long dataMillis = data.getLongExtra("dataNascimento", -1);
             Date dataNascimentoObj = (dataMillis != -1) ? new Date(dataMillis) : new Date();
 
-            if (requestCode == REQUEST_CODE_CADASTRO) {
-                listaPets.add(new Pet(nome, especie, raca, dataNascimentoObj, porte, castrado));
+            Pet novoPet = new Pet(nome, especie, raca, dataNascimentoObj, porte, castrado);
 
+            if (requestCode == REQUEST_CODE_CADASTRO) {
+                petDao.insert(novoPet); // Salvar no Banco
             } else if (requestCode == REQUEST_CODE_EDICAO) {
-                int pos = data.getIntExtra("posicao", -1);
-                if (pos != -1) {
-                    Pet petEditado = listaPets.get(pos);
-                    petEditado.setNome(nome);
-                    petEditado.setRaca(raca);
-                    petEditado.setDataNascimento(dataNascimentoObj);
-                    petEditado.setEspecie(especie);
-                    petEditado.setPorte(porte);
-                    petEditado.setCastrado(castrado);
+                int idPet = data.getIntExtra("id_pet", -1);
+                if (idPet != -1) {
+                    novoPet.setId(idPet);
+                    petDao.update(novoPet);
                 }
             }
-            adapter.notifyDataSetChanged();
+            atualizarLista();
         }
     }
 }
